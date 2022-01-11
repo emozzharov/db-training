@@ -87,11 +87,12 @@ async function task_1_3(db) {
 async function task_1_4(db) {
   let result = await db.query(`
     SELECT
-        CustomerID,
-         AS "Total number of Orders",
-         AS "% of all orders"
-    FROM 
-    ORDER BY "% of all orders", CustomerID ASC
+      CustomerID,
+      COUNT(OrderID) AS "Total number of Orders",
+      SUM("Total number of Orders") AS "% of all orders"
+    FROM Orders
+    GROUP BY CustomerID    
+    ORDER BY "% of all orders", CustomerID ASC ;
     `);
   return result[0];
 }
