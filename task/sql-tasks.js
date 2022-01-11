@@ -43,12 +43,16 @@ async function task_1_1(db) {
  */
 async function task_1_2(db) {
   let result = await db.query(`
-        SELECT
-            OrderID AS "Order Id",
-            SUM(UnitPrice * Quantity) - (SUM(UnitPrice * Quantity) * Discount * 0.01)) AS "Order Total Price",
-            ROUND(SUM(Discount), 3) AS "Total Order Discount, %"
-        FROM OrderDetails
-        ORDER BY "Order Id" DESC   
+    SELECT
+      OrderID AS "Order Id",
+      SUM(UnitPrice * Quantity) AS "Order Total Price",
+      ROUND(((Discount * (
+        SELECT SUM(Quantity) FROM OrderDetails ) / (UnitPrice * (	
+        SELECT SUM(Quantity) FROM OrderDetails )))) * 100, 3)
+          AS "Total Order Discount, %"
+    FROM OrderDetails
+    GROUP BY OrderID
+    ORDER BY "Order Id" DESC
     `);
   return result[0];
 }
