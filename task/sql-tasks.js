@@ -67,7 +67,7 @@ async function task_1_3(db) {
         CompanyName
     FROM Customers
     WHERE Country = 'USA' AND Fax IS NULL 
-`);
+    `);
   return result[0];
 }
 
@@ -81,7 +81,15 @@ async function task_1_3(db) {
  *
  */
 async function task_1_4(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    SELECT
+        CustomerID,
+         AS "Total number of Orders",
+         AS "% of all orders"
+    FROM 
+    ORDER BY "% of all orders", CustomerID ASC
+    `);
+  return result[0];
 }
 
 /**
