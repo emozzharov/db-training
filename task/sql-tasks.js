@@ -354,12 +354,12 @@ async function task_1_15(db) {
  */
 async function task_1_16(db) {
   let result = await db.query(`
-    SELECT 	
-      OrderID,
-      CustomerID,
-      ShipCountry
-    FROM orders
-    WHERE ShipPostalCode IS NOT NULL
+    SELECT 
+      OrderID, CustomerID, ShipCountry
+    FROM
+      Orders
+    WHERE
+      ShipPostalCode IS NOT NULL
     `);
   return result[0];
 }
