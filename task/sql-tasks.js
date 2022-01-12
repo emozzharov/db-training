@@ -376,12 +376,13 @@ async function task_1_16(db) {
 async function task_1_17(db) {
   let result = await db.query(`
     SELECT 
-      categories.CategoryName,
-      AVG(Products.UnitPrice) AS "AvgPrice"
-    FROM categories
-    INNER JOIN Products ON Products.CategoryID = Categories.CategoryID
-    GROUP BY products.CategoryID
-    ORDER BY AvgPrice DESC, CategoryName;
+      C.CategoryName, AVG(P.UnitPrice) AS 'AvgPrice'
+    FROM
+      Categories C
+        INNER JOIN
+      Products P ON P.CategoryID = C.CategoryID
+    GROUP BY P.CategoryID
+    ORDER BY AvgPrice DESC , CategoryName;
     `);
   return result[0];
 }
