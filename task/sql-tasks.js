@@ -43,16 +43,25 @@ async function task_1_1(db) {
  */
 async function task_1_2(db) {
   let result = await db.query(`
+    // SELECT
+    //   OrderID AS "Order Id",
+    //   SUM(UnitPrice * Quantity) AS "Order Total Price",
+    //   ROUND(((Discount * (
+    //     SELECT Quantity FROM OrderDetails ) / (UnitPrice * (	
+    //     SELECT Quantity FROM OrderDetails )))) * 100, 3)
+    //       AS "Total Order Discount, %"
+    // FROM OrderDetails
+    // GROUP BY OrderID
+    // ORDER BY "Order Id" DESC
+
     SELECT
       OrderID AS "Order Id",
       SUM(UnitPrice * Quantity) AS "Order Total Price",
-      ROUND(((Discount * (
-        SELECT SUM(Quantity) FROM OrderDetails ) / (UnitPrice * (	
-        SELECT SUM(Quantity) FROM OrderDetails )))) * 100, 3)
+      ROUND(((Discount * Quantity) / (UnitPrice * Quantity)) * 100, 3)
           AS "Total Order Discount, %"
     FROM OrderDetails
     GROUP BY OrderID
-    ORDER BY "Order Id" DESC
+    ORDER BY "Order Id" DESC;
     `);
   return result[0];
 }
@@ -196,7 +205,14 @@ async function task_1_8(db) {
  *
  */
 async function task_1_9(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    SELECT 
+	    CustomerID,
+      ContactName
+    FROM customers
+    WHERE ContactName LIKE 'F__n%'
+    `);
+  return result[0];
 }
 
 /**
@@ -207,7 +223,10 @@ async function task_1_9(db) {
  *
  */
 async function task_1_10(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
