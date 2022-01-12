@@ -247,11 +247,12 @@ async function task_1_10(db) {
 async function task_1_11(db) {
   let result = await db.query(`
     SELECT 
-      ProductName,
-      UnitPrice
-    FROM products
-    WHERE UnitPrice BETWEEN 5 AND 15
-    ORDER BY UnitPrice, ProductName
+      ProductName, UnitPrice
+    FROM
+      Products
+    WHERE
+      UnitPrice BETWEEN 5 AND 15
+    ORDER BY UnitPrice , ProductName
     `);
   return result[0];
 }
