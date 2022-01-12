@@ -226,10 +226,11 @@ async function task_1_9(db) {
 async function task_1_10(db) {
   let result = await db.query(`
     SELECT 
-	    ProductID,
-      ProductName
-    FROM products
-    WHERE Discontinued = 1;
+      ProductID, ProductName
+    FROM
+      Products
+    WHERE
+      Discontinued = 1;
     `);
   return result[0];
 }
