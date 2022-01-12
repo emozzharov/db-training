@@ -358,7 +358,13 @@ async function task_1_16(db) {
  */
 async function task_1_17(db) {
   let result = await db.query(`
-    
+    SELECT 
+      categories.CategoryName,
+      AVG(Products.UnitPrice) AS "AvgPrice"
+    FROM categories
+    INNER JOIN Products ON Products.CategoryID = Categories.CategoryID
+    GROUP BY products.CategoryID
+    ORDER BY AvgPrice DESC, CategoryName;
     `);
   return result[0];
 }
@@ -372,7 +378,10 @@ async function task_1_17(db) {
  *
  */
 async function task_1_18(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
