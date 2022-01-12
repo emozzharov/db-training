@@ -325,20 +325,22 @@ async function task_1_14(db) {
 async function task_1_15(db) {
   let result = await db.query(`
   SELECT 
-	  SUM(MONTH(OrderDate) = 1) AS "Junuary",
-    SUM(MONTH(OrderDate) = 2) AS "February",
-    SUM(MONTH(OrderDate) = 3) AS "March",
-    SUM(MONTH(OrderDate) = 4) AS "April",
-    SUM(MONTH(OrderDate) = 5) AS "May",
-    SUM(MONTH(OrderDate) = 6) AS "June",
-    SUM(MONTH(OrderDate) = 7) AS "July",
-    SUM(MONTH(OrderDate) = 8) AS "August",
-    SUM(MONTH(OrderDate) = 9) AS "September",
-    SUM(MONTH(OrderDate) = 10) AS "October",
-    SUM(MONTH(OrderDate) = 11) AS "November",
-    SUM(MONTH(OrderDate) = 12) AS "December"
-  FROM orders
-  WHERE YEAR(OrderDate) = 1997
+    SUM(MONTH(OrderDate) = 1) AS 'Junuary',
+    SUM(MONTH(OrderDate) = 2) AS 'February',
+    SUM(MONTH(OrderDate) = 3) AS 'March',
+    SUM(MONTH(OrderDate) = 4) AS 'April',
+    SUM(MONTH(OrderDate) = 5) AS 'May',
+    SUM(MONTH(OrderDate) = 6) AS 'June',
+    SUM(MONTH(OrderDate) = 7) AS 'July',
+    SUM(MONTH(OrderDate) = 8) AS 'August',
+    SUM(MONTH(OrderDate) = 9) AS 'September',
+    SUM(MONTH(OrderDate) = 10) AS 'October',
+    SUM(MONTH(OrderDate) = 11) AS 'November',
+    SUM(MONTH(OrderDate) = 12) AS 'December'
+  FROM
+    Orders
+  WHERE
+    YEAR(OrderDate) = 1997
     `);
   return result[0];
 }
