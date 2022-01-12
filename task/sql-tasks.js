@@ -337,7 +337,12 @@ async function task_1_15(db) {
  */
 async function task_1_16(db) {
   let result = await db.query(`
-    
+    SELECT 	
+      OrderID,
+      CustomerID,
+      ShipCountry
+    FROM orders
+    WHERE ShipPostalCode IS NOT NULL
     `);
   return result[0];
 }
@@ -352,7 +357,10 @@ async function task_1_16(db) {
  *
  */
 async function task_1_17(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
