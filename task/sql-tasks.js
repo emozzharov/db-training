@@ -57,11 +57,11 @@ async function task_1_2(db) {
     SELECT
       OrderID AS "Order Id",
       SUM(UnitPrice * Quantity) AS "Order Total Price",
-      ROUND(((Discount * Quantity) / (UnitPrice * Quantity)) * 100, 3)
-          AS "Total Order Discount, %"
+      ROUND((SUM(Discount * Quantity) / SUM(UnitPrice * Quantity)) * 100, 3)
+        AS "Total Order Discount, %"
     FROM OrderDetails
     GROUP BY OrderID
-    ORDER BY "Order Id" DESC;
+    ORDER BY OrderID DESC;
     `);
   return result[0];
 }
