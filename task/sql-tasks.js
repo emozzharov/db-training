@@ -23,10 +23,10 @@ async function task_1_1(db) {
   // The first task is example, please follow the style in the next functions.
   let result = await db.query(`
         SELECT
-           EmployeeID as "Employee Id",
+           EmployeeID AS "Employee Id",
            CONCAT(FirstName, ' ', LastName) AS "Employee Full Name",
-           Title as "Title",
-           City as "City"
+           Title AS "Title",
+           City AS "City"
         FROM Employees
         ORDER BY City, "Employee Full Name"
     `);
@@ -43,12 +43,13 @@ async function task_1_1(db) {
  */
 async function task_1_2(db) {
   let result = await db.query(`
-    SELECT
-      OrderID AS "Order Id",
-      SUM(UnitPrice * Quantity) AS "Order Total Price",
-      ROUND((SUM(Discount * Quantity) / SUM(UnitPrice * Quantity)) * 100, 3)
-        AS "Total Order Discount, %"
-    FROM OrderDetails
+    SELECT 
+      OrderID AS 'Order Id',
+      SUM(UnitPrice * Quantity) AS 'Order Total Price',
+      ROUND((SUM(Discount * Quantity) / SUM(UnitPrice * Quantity)) * 100,
+            3) AS 'Total Order Discount, %'
+    FROM
+      OrderDetails
     GROUP BY OrderID
     ORDER BY OrderID DESC;
     `);
