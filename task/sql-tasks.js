@@ -244,7 +244,12 @@ async function task_1_10(db) {
  */
 async function task_1_11(db) {
   let result = await db.query(`
-    
+    SELECT 
+      ProductName,
+      UnitPrice
+    FROM products
+    WHERE UnitPrice BETWEEN 5 AND 15
+    ORDER BY UnitPrice, ProductName
     `);
   return result[0];
 }
@@ -259,7 +264,10 @@ async function task_1_11(db) {
  *
  */
 async function task_1_12(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
