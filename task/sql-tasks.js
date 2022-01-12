@@ -301,7 +301,12 @@ async function task_1_13(db) {
  */
 async function task_1_14(db) {
   let result = await db.query(`
-    
+    SELECT 
+      ProductName,
+      UnitsOnOrder,
+      UnitsInStock
+    FROM products
+    WHERE UnitsOnOrder > UnitsInStock
     `);
   return result[0];
 }
@@ -314,7 +319,15 @@ async function task_1_14(db) {
  *
  */
 async function task_1_15(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    SELECT 
+	    COUNT(MONTH(OrderDate) = 1) AS "Junuary",
+      COUNT(MONTH(OrderDate) = 2) AS "February"
+    FROM orders
+    WHERE YEAR(OrderDate) = 1997
+    ORDER BY MONTH(OrderDate)
+    `);
+  return result[0];
 }
 
 /**
@@ -325,7 +338,10 @@ async function task_1_15(db) {
  *
  */
 async function task_1_16(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
