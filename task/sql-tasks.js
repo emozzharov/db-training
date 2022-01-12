@@ -224,7 +224,11 @@ async function task_1_9(db) {
  */
 async function task_1_10(db) {
   let result = await db.query(`
-    
+    SELECT 
+	    ProductID,
+      ProductName
+    FROM products
+    WHERE Discontinued = 1;
     `);
   return result[0];
 }
@@ -239,7 +243,10 @@ async function task_1_10(db) {
  *
  */
 async function task_1_11(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
