@@ -207,10 +207,11 @@ async function task_1_8(db) {
 async function task_1_9(db) {
   let result = await db.query(`
     SELECT 
-	    CustomerID,
-      ContactName
-    FROM customers
-    WHERE ContactName LIKE 'F__n%'
+      CustomerID, ContactName
+    FROM
+      Customers
+    WHERE
+      ContactName LIKE 'F__n%'
     `);
   return result[0];
 }
