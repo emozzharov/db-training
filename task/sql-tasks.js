@@ -306,11 +306,11 @@ async function task_1_13(db) {
 async function task_1_14(db) {
   let result = await db.query(`
     SELECT 
-      ProductName,
-      UnitsOnOrder,
-      UnitsInStock
-    FROM products
-    WHERE UnitsOnOrder > UnitsInStock
+      ProductName, UnitsOnOrder, UnitsInStock
+    FROM
+      Products
+    WHERE
+      UnitsOnOrder > UnitsInStock
     `);
   return result[0];
 }
