@@ -160,11 +160,15 @@ async function task_1_6(db) {
  */
 async function task_1_7(db) {
   let result = await db.query(`
-    SELECT
-	    employees.EmployeeID,
-      CONCAT(employees.FirstName, ' ', employees.LastName) AS "FullName",
-      CONCAT(employees.FirstName, ' ', employees.LastName) AS "ReportsTo"
-    FROM employees
+    SELECT 
+      E.EmployeeID,
+      CONCAT(E.FirstName, ' ', E.LastName) AS 'FullName',
+      CONCAT(M.FirstName, ' ', M.LastName) AS 'ReportsTo'
+    FROM
+      employees E
+        LEFT JOIN
+      employees M ON M.ReportsTo = E.EmployeeID
+    ORDER BY E.EmployeeID
     `);
   return result[0];
 }
