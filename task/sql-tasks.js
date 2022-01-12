@@ -156,7 +156,14 @@ async function task_1_6(db) {
  *
  */
 async function task_1_7(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    SELECT
+	    employees.EmployeeID,
+      CONCAT(employees.FirstName, ' ', employees.LastName) AS "FullName",
+      CONCAT(employees.FirstName, ' ', employees.LastName) AS "ReportsTo"
+    FROM employees
+    `);
+  return result[0];
 }
 
 /**
