@@ -65,11 +65,12 @@ async function task_1_2(db) {
  */
 async function task_1_3(db) {
   let result = await db.query(`
-    SELECT
-        CustomerID,
-        CompanyName
-    FROM Customers
-    WHERE Country = 'USA' AND Fax IS NULL 
+    SELECT 
+      CustomerID, CompanyName
+    FROM
+      Customers
+    WHERE
+      Country = 'USA' AND Fax IS NULL
     `);
   return result[0];
 }
