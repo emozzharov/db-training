@@ -379,7 +379,12 @@ async function task_1_17(db) {
  */
 async function task_1_18(db) {
   let result = await db.query(`
-    
+    SELECT 	
+      OrderDate,
+      COUNT(DAY(OrderDate)) AS "Total Number of Orders"
+    FROM orders
+    WHERE YEAR(OrderDate) = 1998
+    GROUP BY OrderDate
     `);
   return result[0];
 }
@@ -393,7 +398,10 @@ async function task_1_18(db) {
  *
  */
 async function task_1_19(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
