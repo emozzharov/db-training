@@ -132,7 +132,17 @@ async function task_1_5(db) {
  *
  */
 async function task_1_6(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    SELECT 
+	    Products.ProductName,
+	    Categories.CategoryName,	
+      Suppliers.CompanyName AS "SupplierCompanyName"
+    FROM Categories
+    INNER JOIN Products ON Products.CategoryID = Categories.CategoryID
+    INNER JOIN suppliers ON suppliers.SupplierID = products.SupplierID
+    ORDER BY ProductName
+    `);
+  return result[0];
 }
 
 /**
