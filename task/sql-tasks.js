@@ -43,17 +43,6 @@ async function task_1_1(db) {
  */
 async function task_1_2(db) {
   let result = await db.query(`
-    // SELECT
-    //   OrderID AS "Order Id",
-    //   SUM(UnitPrice * Quantity) AS "Order Total Price",
-    //   ROUND(((Discount * (
-    //     SELECT Quantity FROM OrderDetails ) / (UnitPrice * (	
-    //     SELECT Quantity FROM OrderDetails )))) * 100, 3)
-    //       AS "Total Order Discount, %"
-    // FROM OrderDetails
-    // GROUP BY OrderID
-    // ORDER BY "Order Id" DESC
-
     SELECT
       OrderID AS "Order Id",
       SUM(UnitPrice * Quantity) AS "Order Total Price",
@@ -320,12 +309,21 @@ async function task_1_14(db) {
  */
 async function task_1_15(db) {
   let result = await db.query(`
-    SELECT 
-	    COUNT(MONTH(OrderDate) = 1) AS "Junuary",
-      COUNT(MONTH(OrderDate) = 2) AS "February"
-    FROM orders
-    WHERE YEAR(OrderDate) = 1997
-    ORDER BY MONTH(OrderDate)
+  SELECT 
+	  SUM(MONTH(OrderDate) = 1) AS "Junuary",
+    SUM(MONTH(OrderDate) = 2) AS "February",
+    SUM(MONTH(OrderDate) = 3) AS "March",
+    SUM(MONTH(OrderDate) = 4) AS "April",
+    SUM(MONTH(OrderDate) = 5) AS "May",
+    SUM(MONTH(OrderDate) = 6) AS "June",
+    SUM(MONTH(OrderDate) = 7) AS "July",
+    SUM(MONTH(OrderDate) = 8) AS "August",
+    SUM(MONTH(OrderDate) = 9) AS "September",
+    SUM(MONTH(OrderDate) = 10) AS "October",
+    SUM(MONTH(OrderDate) = 11) AS "November",
+    SUM(MONTH(OrderDate) = 12) AS "December"
+  FROM orders
+  WHERE YEAR(OrderDate) = 1997
     `);
   return result[0];
 }
