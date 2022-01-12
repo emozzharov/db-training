@@ -413,7 +413,16 @@ async function task_1_19(db) {
  *
  */
 async function task_1_20(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    SELECT 
+      employees.EmployeeID,
+      CONCAT(employees.FirstName, ' ', employees.LastName) AS "Employee Full Name",
+      SUM(orderdetails.UnitPrice) AS "Amount, $"
+    FROM employees
+    INNER JOIN orders ON orders.EmployeeID = employees.EmployeeID
+    INNER JOIN orderdetails ON orderdetails.OrderID = orders.OrderID
+    `);
+  return result[0];
 }
 
 /**
@@ -423,7 +432,10 @@ async function task_1_20(db) {
  * @return {array}
  */
 async function task_1_21(db) {
-  throw new Error("Not implemented");
+  let result = await db.query(`
+    
+    `);
+  return result[0];
 }
 
 /**
