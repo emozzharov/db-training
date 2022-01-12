@@ -134,12 +134,15 @@ async function task_1_5(db) {
 async function task_1_6(db) {
   let result = await db.query(`
     SELECT 
-	    Products.ProductName,
-	    Categories.CategoryName,	
-      Suppliers.CompanyName AS "SupplierCompanyName"
-    FROM Categories
-    INNER JOIN Products ON Products.CategoryID = Categories.CategoryID
-    INNER JOIN suppliers ON suppliers.SupplierID = products.SupplierID
+      Products.ProductName,
+      Categories.CategoryName,
+      Suppliers.CompanyName AS 'SupplierCompanyName'
+    FROM
+      Categories
+        INNER JOIN
+      Products ON Products.CategoryID = Categories.CategoryID
+        INNER JOIN
+      Suppliers ON Suppliers.SupplierID = Products.SupplierID
     ORDER BY ProductName
     `);
   return result[0];
