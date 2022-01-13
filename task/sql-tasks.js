@@ -500,12 +500,15 @@ async function task_1_21(db) {
 async function task_1_22(db) {
   let result = await db.query(`
     SELECT 
-      customers.CompanyName,
-      products.ProductName,
-      MAX(orderdetails.UnitPrice) AS "PricePerItem"
-    FROM customers
-    inner join products
-    inner join orderdetails
+      C.CompanyName,
+      P.ProductName,
+      (SELECT (ORD.UnitPrice)  ) AS 'PricePerItem'
+    FROM
+      Customers C
+        INNER JOIN
+      Products P
+        INNER JOIN
+      Orderdetails ORD
     `);
   return result[0];
 }
