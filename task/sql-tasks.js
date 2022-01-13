@@ -452,13 +452,18 @@ async function task_1_19(db) {
  */
 async function task_1_20(db) {
   let result = await db.query(`
-    SELECT 
-      employees.EmployeeID,
-      CONCAT(employees.FirstName, ' ', employees.LastName) AS "Employee Full Name",
-      SUM(orderdetails.UnitPrice) AS "Amount, $"
-    FROM employees
-    INNER JOIN orders ON orders.EmployeeID = employees.EmployeeID
-    INNER JOIN orderdetails ON orderdetails.OrderID = orders.OrderID
+    (SELECT 
+      E.EmployeeID,
+      CONCAT(E.FirstName, ' ', E.LastName) AS 'Employee Full Name',
+      SUM(ORD.UnitPrice * ORD.Quantity) AS 'Amount, $'
+    FROM
+      Employees E
+        INNER JOIN
+      Orders O ON O.EmployeeID = E.EmployeeID
+        INNER JOIN
+      Orderdetails ORD ON ORD.OrderID = O.OrderID
+    GROUP BY E.EmployeeID) ORDER BY 'Amount, $' DESC 
+  //  LIMIT 1
     `);
   return result[0];
 }
