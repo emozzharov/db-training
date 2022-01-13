@@ -452,7 +452,16 @@ async function task_1_20(db) {
  */
 async function task_1_21(db) {
   let result = await db.query(`
-    
+    SELECT 
+      OrderID, SUM(Quantity * UnitPrice) AS "Maximum Purchase Amount, $"
+    FROM
+      Orderdetails
+    GROUP BY OrderID
+    HAVING SUM(Quantity * UnitPrice) >= ALL (SELECT 
+      SUM(Quantity * UnitPrice)
+    FROM
+      Orderdetails
+    GROUP BY OrderID)
     `);
   return result[0];
 }
