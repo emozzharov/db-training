@@ -431,7 +431,7 @@ async function task_1_19(db) {
     SELECT 
       C.CustomerID,
       C.CompanyName,
-      SUM(O.Quantity * O.UnitPrice) AS 'Maximum Purchase Amount, $'
+      (O.Quantity * O.UnitPrice) AS 'Maximum Purchase Amount, $'
     FROM
       Customers C
         INNER JOIN
