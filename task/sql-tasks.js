@@ -95,14 +95,16 @@ async function task_1_4(db) {
     // ORDER BY "% of all orders", CustomerID ASC ;
 
     SELECT 
-      A.CustomerID,
-      COUNT(A.OrderID) AS 'Total number of Orders',
-      COUNT(A.OrderID) / COUNT(B.OrderID) * 100 AS '% of all orders'
+      CustomerID,
+      COUNT(OrderID) AS 'Total number of Orders',
+      COUNT(OrderID) / (SELECT 
+            COUNT(*)
+        FROM
+            Orders) * 100 AS 'of_all_orders'
     FROM
-      Orders A
-    INNER JOIN Orders B ON B.CustomerID = A.CustomerID
+      Orders
     GROUP BY CustomerID
-    ORDER BY '% of all orders' , CustomerID ASC;
+    ORDER BY of_all_orders DESC , CustomerID;
     `);
   return result[0];
 }
@@ -452,18 +454,19 @@ async function task_1_19(db) {
  */
 async function task_1_20(db) {
   let result = await db.query(`
-    (SELECT 
+    SELECT 
       E.EmployeeID,
       CONCAT(E.FirstName, ' ', E.LastName) AS 'Employee Full Name',
-      SUM(ORD.UnitPrice * ORD.Quantity) AS 'Amount, $'
+      SUM(ORD.UnitPrice * ORD.Quantity) AS 'Amount'
     FROM
       Employees E
         INNER JOIN
       Orders O ON O.EmployeeID = E.EmployeeID
         INNER JOIN
-      Orderdetails ORD ON ORD.OrderID = O.OrderID
-    GROUP BY E.EmployeeID) ORDER BY 'Amount, $' DESC 
-  //  LIMIT 1
+      Orderdetails ORD ON ORD.OrderID = O.OrderID 
+    GROUP BY E.EmployeeID
+    ORDER BY Amount DESC
+    LIMIT 1
     `);
   return result[0];
 }
