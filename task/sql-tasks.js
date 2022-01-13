@@ -86,13 +86,23 @@ async function task_1_3(db) {
  */
 async function task_1_4(db) {
   let result = await db.query(`
-    SELECT
-      CustomerID,
-      COUNT(OrderID) AS "Total number of Orders",
-      SUM("Total number of Orders") AS "% of all orders"
-    FROM Orders
-    GROUP BY CustomerID    
-    ORDER BY "% of all orders", CustomerID ASC ;
+    // SELECT
+    //   CustomerID,
+    //   COUNT(OrderID) AS "Total number of Orders",
+    //   SUM("Total number of Orders") AS "% of all orders"
+    // FROM Orders
+    // GROUP BY CustomerID    
+    // ORDER BY "% of all orders", CustomerID ASC ;
+
+    SELECT 
+      A.CustomerID,
+      COUNT(A.OrderID) AS 'Total number of Orders',
+      COUNT(A.OrderID) / COUNT(B.OrderID) * 100 AS '% of all orders'
+    FROM
+      Orders A
+    INNER JOIN Orders B ON B.CustomerID = A.CustomerID
+    GROUP BY CustomerID
+    ORDER BY '% of all orders' , CustomerID ASC;
     `);
   return result[0];
 }
