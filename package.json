@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "SQL training tasks",
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
-    "test-debug": "./node_modules/.bin/mocha --debug"
+    "test": "mocha",
+    "test-debug": "mocha --debug"
   },
   "author": "ilya mokin",
   "license": "MIT",
