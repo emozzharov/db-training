@@ -418,7 +418,16 @@ async function task_1_18(db) {
  */
 async function task_1_19(db) {
   let result = await db.query(`
-    
+    SELECT 
+      C.CustomerID,
+      C.CompanyName,
+      SUM(O.Quantity * O.UnitPrice) AS 'Maximum Purchase Amount, $'
+    FROM
+      Customers C
+        INNER JOIN
+      Orders ORD ON ORD.CustomerID = C.CustomerID
+        INNER JOIN
+      Orderdetails O ON O.OrderID = ORD.OrderID
     `);
   return result[0];
 }
