@@ -190,7 +190,14 @@ async function task_1_8(db) {
  *
  */
 async function task_1_9(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            CustomerID as "CustomerID",
+            ContactName as "ContactName"
+        FROM customers 
+        WHERE ContactName rlike '^F' and LOCATE('n',ContactName) = 4
+    `)
+    return result[0]
 }
 
 /**
