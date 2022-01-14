@@ -284,7 +284,15 @@ async function task_1_13(db) {
  *
  */
 async function task_1_14(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            ProductName as "ProductName",
+            UnitsOnOrder as "UnitsOnOrder",
+            UnitsInStock as "UnitsInStock"
+        FROM products
+        WHERE UnitsInStock < UnitsOnOrder
+    `)
+    return result[0]
 }
 
 /**
