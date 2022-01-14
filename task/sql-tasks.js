@@ -425,13 +425,16 @@ async function task_1_19(db) {
     SELECT 
       C.CustomerID,
       C.CompanyName,
-      (O.Quantity * O.UnitPrice) AS 'Maximum Purchase Amount, $'
+      SUM(ORD.Quantity * ORD.UnitPrice) AS 'Maximum_Purchase_Amount'
     FROM
       Customers C
         INNER JOIN
-      Orders ORD ON ORD.CustomerID = C.CustomerID
+      Orders O ON O.CustomerID = C.CustomerID
         INNER JOIN
-      Orderdetails O ON O.OrderID = ORD.OrderID
+      Orderdetails ORD ON ORD.OrderID = O.OrderID
+    GROUP BY O.CustomerID
+    AVING SUM(ORD.Quantity * ORD.UnitPrice) > 10000
+    ORDER BY  Maximum_Purchase_Amount DESC
     `);
   return result[0];
 }
