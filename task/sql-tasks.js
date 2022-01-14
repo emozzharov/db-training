@@ -267,7 +267,13 @@ async function task_1_12(db) {
  *
  */
 async function task_1_13(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            COUNT(*) as "TotalOfCurrentProducts",
+            (SELECT COUNT(*) FROM products WHERE Discontinued = 1) AS "TotalOfDiscontinuedProducts"
+        FROM products
+    `)
+    return result[0]
 }
 
 /**
