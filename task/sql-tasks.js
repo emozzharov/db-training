@@ -86,14 +86,6 @@ async function task_1_3(db) {
  */
 async function task_1_4(db) {
   let result = await db.query(`
-    // SELECT
-    //   CustomerID,
-    //   COUNT(OrderID) AS "Total number of Orders",
-    //   SUM("Total number of Orders") AS "% of all orders"
-    // FROM Orders
-    // GROUP BY CustomerID    
-    // ORDER BY "% of all orders", CustomerID ASC ;
-
     SELECT 
       CustomerID,
       COUNT(OrderID) AS 'Total number of Orders',
@@ -502,16 +494,21 @@ async function task_1_21(db) {
  */
 async function task_1_22(db) {
   let result = await db.query(`
-    SELECT 
-      C.CompanyName,
+    SELECT DISTINCT
+      (C.CompanyName),
       P.ProductName,
-      (SELECT (ORD.UnitPrice)  ) AS 'PricePerItem'
+      ORD.UnitPrice AS 'PricePerItem'
     FROM
       Customers C
         INNER JOIN
-      Products P
+      Orders O ON O.CustomerID = C.CustomerID
         INNER JOIN
-      Orderdetails ORD
+      Orderdetails ORD ON ORD.OrderID = O.OrderID
+        INNER JOIN
+      Products P ON P.ProductID = ORD.ProductID
+    WHERE
+      ORD.UnitPrice = (SELECT MAX(ORD.UnitPrice))
+      ORDER BY PricePerItem DESC , CompanyName , ProductName
     `);
   return result[0];
 }
