@@ -208,7 +208,13 @@ async function task_1_9(db) {
  *
  */
 async function task_1_10(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            ProductID as "ProductID",
+            ProductName as "ProductName"
+        FROM products WHERE Discontinued = 1
+    `)
+    return result[0]
 }
 
 /**
