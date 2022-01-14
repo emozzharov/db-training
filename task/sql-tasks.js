@@ -87,7 +87,16 @@ async function task_1_4(db) {
  *
  */
 async function task_1_5(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        select 
+            ProductID as "ProductId",
+            ProductName,
+            QuantityPerUnit
+        from products
+        where ProductName rlike '^[ABCDEF]'
+        order by ProductName;
+    `)
+    return result[0];
 }
 
 /**
