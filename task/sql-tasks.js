@@ -24,11 +24,11 @@ async function task_1_1(db) {
   let result = await db.query(`
         SELECT
            EmployeeID AS "Employee Id",
-           CONCAT(FirstName, ' ', LastName) AS "Employee Full Name",
+           CONCAT(FirstName, ' ', LastName) AS "Employee_Full_Name",
            Title AS "Title",
            City AS "City"
         FROM Employees
-        ORDER BY City, "Employee Full Name"
+        ORDER BY City, Employee_Full_Name
     `);
   return result[0];
 }
@@ -90,9 +90,9 @@ async function task_1_4(db) {
       CustomerID,
       COUNT(OrderID) AS 'Total number of Orders',
       COUNT(OrderID) / (SELECT 
-            COUNT(*)
+          COUNT(*)
         FROM
-            Orders) * 100 AS 'of_all_orders'
+          Orders) * 100.0 AS 'of_all_orders'
     FROM
       Orders
     GROUP BY CustomerID
@@ -138,15 +138,15 @@ async function task_1_5(db) {
 async function task_1_6(db) {
   let result = await db.query(`
     SELECT 
-      Products.ProductName,
-      Categories.CategoryName,
-      Suppliers.CompanyName AS 'SupplierCompanyName'
+      P.ProductName,
+      C.CategoryName,
+      S.CompanyName AS 'SupplierCompanyName'
     FROM
-      Categories
+      Categories C
         INNER JOIN
-      Products ON Products.CategoryID = Categories.CategoryID
+      Products P ON P.CategoryID = C.CategoryID
         INNER JOIN
-      Suppliers ON Suppliers.SupplierID = Products.SupplierID
+      Suppliers S ON S.SupplierID = P.SupplierID
     ORDER BY ProductName
     `);
   return result[0];
@@ -167,11 +167,13 @@ async function task_1_7(db) {
     SELECT 
       lefft.EmployeeID,
       CONCAT(lefft.FirstName, ' ', lefft.LastName) AS 'FullName',
-      IF (lefft.ReportsTo IS NULL, "-", CONCAT(rigght.FirstName, ' ', rigght.LastName)) AS 'ReportsTo'
+      IF(lefft.ReportsTo IS NULL,
+        '-',
+        CONCAT(rigght.FirstName, ' ', rigght.LastName)) AS 'ReportsTo'
     FROM
-      employees lefft
+      Employees lefft
         LEFT JOIN
-      employees rigght ON rigght.EmployeeID = lefft.ReportsTo
+      Employees rigght ON rigght.EmployeeID = lefft.ReportsTo
     `);
   return result[0];
 }
@@ -432,8 +434,8 @@ async function task_1_19(db) {
         INNER JOIN
       Orderdetails ORD ON ORD.OrderID = O.OrderID
     GROUP BY O.CustomerID
-    AVING SUM(ORD.Quantity * ORD.UnitPrice) > 10000
-    ORDER BY  Maximum_Purchase_Amount DESC
+    HAVING SUM(ORD.Quantity * ORD.UnitPrice) > 10000
+    ORDER BY Maximum_Purchase_Amount DESC
     `);
   return result[0];
 }
@@ -474,15 +476,16 @@ async function task_1_20(db) {
 async function task_1_21(db) {
   let result = await db.query(`
     SELECT 
-      OrderID, SUM(Quantity * UnitPrice) AS "Maximum Purchase Amount, $"
+      OrderID,
+      SUM(Quantity * UnitPrice) AS "Maximum Purchase Amount, $"
     FROM
       Orderdetails
     GROUP BY OrderID
     HAVING SUM(Quantity * UnitPrice) >= ALL (SELECT 
-      SUM(Quantity * UnitPrice)
-    FROM
-      Orderdetails
-    GROUP BY OrderID)
+        SUM(Quantity * UnitPrice)
+      FROM
+        Orderdetails
+      GROUP BY OrderID)
     `);
   return result[0];
 }
