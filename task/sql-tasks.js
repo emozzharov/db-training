@@ -165,14 +165,13 @@ async function task_1_6(db) {
 async function task_1_7(db) {
   let result = await db.query(`
     SELECT 
-      E.EmployeeID,
-      CONCAT(E.FirstName, ' ', E.LastName) AS 'FullName',
-      CONCAT(M.FirstName, ' ', M.LastName) AS 'ReportsTo'
+      lefft.EmployeeID,
+      CONCAT(lefft.FirstName, ' ', lefft.LastName) AS 'FullName',
+      IF (lefft.ReportsTo IS NULL, "-", CONCAT(rigght.FirstName, ' ', rigght.LastName)) AS 'ReportsTo'
     FROM
-      employees E
+      employees lefft
         LEFT JOIN
-      employees M ON M.ReportsTo = E.EmployeeID
-    ORDER BY E.EmployeeID
+      employees rigght ON rigght.EmployeeID = lefft.ReportsTo
     `);
   return result[0];
 }
