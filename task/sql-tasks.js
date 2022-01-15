@@ -331,7 +331,15 @@ async function task_1_15(db) {
  *
  */
 async function task_1_16(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            OrderID as "OrderID",
+            CustomerID as "CustomerID",
+            ShipCountry as "ShipCountry"
+        FROM orders
+        WHERE ShipPostalCode IS NOT NULL
+    `)
+    return result[0]
 }
 
 /**
