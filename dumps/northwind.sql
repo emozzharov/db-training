@@ -422,7 +422,8 @@ CREATE TABLE `OrderDetails`(
 	FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`)
 		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-INSERT INTO `OrderDetails` (OrderID, ProductID, UnitPrice, Quantity, Discount) VALUES(10248, 11, 14, 12, 0.0);
+INSERT INTO `OrderDetails` (OrderID, ProductID, UnitPrice, Quantity, Discount) 
+VALUES(10248, 11, 14, 12, 0.0);
 INSERT INTO `OrderDetails` (OrderID, ProductID, UnitPrice, Quantity, Discount)
 VALUES(10248, 42, 9.8, 10, 0.0);
 INSERT INTO `OrderDetails` (OrderID, ProductID, UnitPrice, Quantity, Discount)
