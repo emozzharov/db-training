@@ -373,7 +373,15 @@ async function task_1_17(db) {
  *
  */
 async function task_1_18(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+            SELECT 
+                DATE_FORMAT(OrderDate, '%Y-%m-%d %T') as "OrderDate",
+                Count(*) as "Total Number of Orders"
+            FROM orders
+            WHERE YEAR(OrderDate) = 1998
+            GROUP BY OrderDate
+    `)
+    return result[0]
 }
 
 /**
