@@ -115,12 +115,7 @@ async function task_1_5(db) {
     FROM
     Products
     WHERE
-      ProductName LIKE 'A%'
-        OR ProductName LIKE 'B%'
-        OR ProductName LIKE 'C%'
-        OR ProductName LIKE 'D%'
-        OR ProductName LIKE 'E%'
-        OR ProductName LIKE 'F%'
+      ProductName RLIKE '^A|^B|^C|^D|^E|^F'   
     ORDER BY ProductName
     `);
   return result[0];
