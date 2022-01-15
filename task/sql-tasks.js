@@ -439,7 +439,16 @@ async function task_1_20(db) {
  * @return {array}
  */
 async function task_1_21(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            OrderID AS "OrderID",
+            SUM(UnitPrice*Quantity) AS "Maximum Purchase Amount, $"
+        FROM orderdetails
+        group by OrderID
+        ORDER BY SUM(UnitPrice*Quantity) DESC
+        LIMIT 1
+    `)
+    return result[0]
 }
 
 /**
