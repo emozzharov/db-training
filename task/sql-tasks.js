@@ -352,7 +352,16 @@ async function task_1_16(db) {
  *
  */
 async function task_1_17(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT 
+            cat.CategoryName AS "CategoryName",
+            AVG(prod.UnitPrice) AS "AvgPrice"
+        FROM categories cat
+        JOIN products prod on prod.CategoryID = cat.CategoryID
+        GROUP BY cat.CategoryID
+        ORDER BY AVG(prod.UnitPrice) DESC, cat.CategoryName
+    `)
+    return result[0]
 }
 
 /**
