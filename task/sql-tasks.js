@@ -393,7 +393,19 @@ async function task_1_18(db) {
  *
  */
 async function task_1_19(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            cus.CustomerID as "CustomerID",
+            cus.CompanyName as "CompanyName",
+            SUM(del.UnitPrice*del.Quantity) as "TotalOrdersAmount, $"
+        FROM customers cus
+        JOIN orders ord ON ord.CustomerID = cus.CustomerID
+        JOIN orderdetails del ON del.OrderID = ord.OrderID
+        GROUP BY cus.CustomerID
+        HAVING SUM(del.UnitPrice*del.Quantity)>= 10000
+        ORDER BY SUM(del.UnitPrice*del.Quantity) desc,cus.CustomerID
+    `)
+    return result[0]
 }
 
 /**
@@ -405,7 +417,19 @@ async function task_1_19(db) {
  *
  */
 async function task_1_20(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            empl.EmployeeID as "EmployeeID",
+            CONCAT(empl.FirstName," ",empl.LastName) as "Employee Full Name",
+            SUM(del.UnitPrice*del.Quantity) as "Amount, $"
+        FROM employees empl
+        JOIN orders ord ON ord.EmployeeID = empl.EmployeeID
+        JOIN orderdetails del ON del.OrderID = ord.OrderID
+        GROUP BY empl.EmployeeID
+        ORDER BY SUM(del.UnitPrice*del.Quantity) desc
+        LIMIT 1
+    `)
+    return result[0]
 }
 
 /**
