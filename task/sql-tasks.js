@@ -303,7 +303,24 @@ async function task_1_14(db) {
  *
  */
 async function task_1_15(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            SUM(MONTH(OrderDate) = 1 ) as "January",
+            SUM(MONTH(OrderDate) = 2 ) as "February",
+            SUM(MONTH(OrderDate) = 3 ) as "March",
+            SUM(MONTH(OrderDate) = 4 ) as "April",
+            SUM(MONTH(OrderDate) = 5 ) as "May",
+            SUM(MONTH(OrderDate) = 6 ) as "June",
+            SUM(MONTH(OrderDate) = 7 ) as "July",
+            SUM(MONTH(OrderDate) = 8 ) as "August",
+            SUM(MONTH(OrderDate) = 9 ) as "September",
+            SUM(MONTH(OrderDate) = 10 ) as "October",
+            SUM(MONTH(OrderDate) = 11 ) as "November",
+            SUM(MONTH(OrderDate) = 12 ) as "December"
+        FROM orders
+        WHERE YEAR(OrderDate) = 1997
+    `)
+    return result[0];
 }
 
 /**
