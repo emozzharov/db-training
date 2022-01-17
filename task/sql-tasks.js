@@ -459,7 +459,21 @@ async function task_1_21(db) {
  * @return {array}
  */
 async function task_1_22(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+        cus.CompanyName as "CompanyName",
+        (select ProductName from products where ProductID  =  (select d.productid from orderdetails d inner join orders ord on ord.OrderID = d.OrderID 
+                    where d.unitprice = max(del.UnitPrice) and ord.CustomerID = cus.CustomerID
+                    limit 1)) as "ProductName",
+        max(del.UnitPrice) as PricePerItem
+    FROM customers cus
+    JOIN orders ord ON ord.CustomerID = cus.CustomerID
+    JOIN orderdetails del ON del.OrderID = ord.OrderID
+    JOIN products prod ON prod.ProductID = del.ProductID
+    group by cus.CompanyName
+    order by PricePerItem desc,cus.CompanyName,prod.ProductName
+    `)
+    return result[0]
 }
 
 module.exports = {
