@@ -264,7 +264,16 @@ async function task_1_11(db) {
  *
  */
 async function task_1_12(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            ProductName,
+            UnitPrice
+        FROM
+            Products
+        ORDER BY UnitPrice DESK
+        LIMIT 20;
+    `);
+    return result[0];
 }
 
 /**
@@ -275,7 +284,13 @@ async function task_1_12(db) {
  *
  */
 async function task_1_13(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            COUNT(*) as "TotalOfCurrentProducts",
+            (SELECT COUNT(*) FROM Products WHERE Discontinued = 1) as "TotalOfDiscontinuedProducts"
+        FROM products          
+    `);
+    return result[0];
 }
 
 /**
@@ -286,7 +301,17 @@ async function task_1_13(db) {
  *
  */
 async function task_1_14(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            ProductName,
+            UnitsOnOrder,
+            UnitsInStock
+        FROM
+            Products
+        WHERE
+            UnitsOnOrder > UnitsInStock
+    `);
+    return result[0];
 }
 
 /**
@@ -297,7 +322,26 @@ async function task_1_14(db) {
  *
  */
 async function task_1_15(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            SUM(MONTH(OrderDate) = 1 ) as "January",
+            SUM(MONTH(OrderDate) = 2 ) as "February",
+            SUM(MONTH(OrderDate) = 3 ) as "March",
+            SUM(MONTH(OrderDate) = 4 ) as "April",
+            SUM(MONTH(OrderDate) = 5 ) as "May",
+            SUM(MONTH(OrderDate) = 6 ) as "June",
+            SUM(MONTH(OrderDate) = 7 ) as "July",
+            SUM(MONTH(OrderDate) = 8 ) as "August",
+            SUM(MONTH(OrderDate) = 9 ) as "September",
+            SUM(MONTH(OrderDate) = 10 ) as "October",
+            SUM(MONTH(OrderDate) = 11 ) as "November",
+            SUM(MONTH(OrderDate) = 12 ) as "December"
+        FROM
+            Orders
+        WHERE
+            YEAR(OrderDate) = 1997
+    `);
+    return result[0];
 }
 
 /**
@@ -308,7 +352,17 @@ async function task_1_15(db) {
  *
  */
 async function task_1_16(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+        SELECT
+            OrderID,
+            CustomerID,
+            ShipCountry
+        FROM
+            Orders
+        WHERE
+            ShipPostalCode IS NOT NULL
+    `);
+    return result[0];
 }
 
 /**
@@ -321,7 +375,10 @@ async function task_1_16(db) {
  *
  */
 async function task_1_17(db) {
-    throw new Error("Not implemented");
+    let result = await db.query(`
+
+    `);
+    return result[0];
 }
 
 /**
