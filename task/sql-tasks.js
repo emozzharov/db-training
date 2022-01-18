@@ -248,8 +248,8 @@ async function task_1_10(db) {
 async function task_1_11(db) {
     let result = await db.query(`
         SELECT
-            ProductName,
-            UnitPrice
+            ProductName as "ProductName",
+            UnitPrice as "UnitPrice"
         FROM
             Products
         WHERE
@@ -271,11 +271,11 @@ async function task_1_11(db) {
 async function task_1_12(db) {
     let result = await db.query(`
         SELECT
-            ProductName,
-            UnitPrice
+            ProductName as "ProductName",
+            UnitPrice as "UnitPrice"
         FROM
             Products
-        ORDER BY UnitPrice DESK
+        ORDER BY UnitPrice DESC
         LIMIT 20)
         ORDER BY UnitPrice
     `);
