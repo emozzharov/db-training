@@ -11,8 +11,8 @@ describe('sql-tasks', function() {
     before(async function() {
         dbconnection = await mysql.createConnection({
             host     : process.env.HOST || 'localhost',
-            user     : process.env.USER_NAME || 'qbuser',
-            password : process.env.PASSWORD || '#QB#us!56%6$',
+            user     : process.env.USER_NAME || 'root',
+            password : process.env.PASSWORD || 'password',
             database : process.env.DATABASE || 'northwind'
         })
     });
